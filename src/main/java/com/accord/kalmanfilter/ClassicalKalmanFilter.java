@@ -15,6 +15,8 @@ import org.ejml.simple.SimpleMatrix;
 /**
  * Represents a Kalman filter.
  *
+ * <p>Implemented by the classical Kalman filter equations.
+ *
  * @author daniel.laing
  */
 @SuppressWarnings({
@@ -22,7 +24,7 @@ import org.ejml.simple.SimpleMatrix;
   "checkstyle:MultipleVariableDeclarations",
   "checkstyle:ParameterName"
 })
-public class ClassicalKalmanFilter {
+public class ClassicalKalmanFilter implements KalmanFilter {
   private DMatrixRMaj F, H, Q, R, P, x;
 
   // Helper variables
@@ -87,16 +89,16 @@ public class ClassicalKalmanFilter {
     R = r;
   }
 
-  public DMatrixRMaj getP() {
-    return P;
+  public SimpleMatrix getStateCovariance() {
+    return SimpleMatrix.wrap(P);
   }
 
-  public DMatrixRMaj getY() {
-    return y;
+  public SimpleMatrix getInnovations() {
+    return SimpleMatrix.wrap(y);
   }
 
-  public DMatrixRMaj getS() {
-    return S;
+  public SimpleMatrix getInnovationCovariance() {
+    return SimpleMatrix.wrap(S);
   }
 
   public DMatrixRMaj getK() {
