@@ -1,0 +1,6 @@
+<module name="Checker">
+ <module name="SuppressWarningsFilter" />
+ <module name="TreeWalker">
+  <module name="SuppressWorningsHolder" />
+ </module>
+</module>
