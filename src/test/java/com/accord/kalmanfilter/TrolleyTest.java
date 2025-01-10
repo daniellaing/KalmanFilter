@@ -37,7 +37,7 @@ public class TrolleyTest {
     var x0 = new SimpleMatrix(new double[] {0, 0});
     var P = SimpleMatrix.diag(0, 0);
 
-    var k = new KalmanFilter(F, H, Q, R, P, x0);
+    var k = new ClassicalKalmanFilter(F, H, Q, R, P, x0);
 
     var x_true = x0;
     for (int i = 0; i < num_steps; i++) {

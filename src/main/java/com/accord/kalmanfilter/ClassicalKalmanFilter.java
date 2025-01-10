@@ -22,7 +22,7 @@ import org.ejml.simple.SimpleMatrix;
   "checkstyle:MultipleVariableDeclarations",
   "checkstyle:ParameterName"
 })
-public class KalmanFilter {
+public class ClassicalKalmanFilter {
   private DMatrixRMaj F, H, Q, R, P, x;
 
   // Helper variables
@@ -41,7 +41,7 @@ public class KalmanFilter {
    * @param P Initial state covariance matrix
    * @param x Initial state variables
    */
-  public KalmanFilter(
+  public ClassicalKalmanFilter(
       SimpleMatrix F,
       SimpleMatrix H,
       SimpleMatrix Q,
