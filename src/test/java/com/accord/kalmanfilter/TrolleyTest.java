@@ -25,21 +25,26 @@ public class TrolleyTest {
 
     var F = new SimpleMatrix(new double[][] {new double[] {1F, dt}, new double[] {0F, 1F}});
     var G = new SimpleMatrix(new double[] {0.5F * dt * dt, dt});
-    var Q =
-        new SimpleMatrix(
-                new double[][] {
-                  new double[] {0.25F * (double) Math.pow(dt, 4), 0.5F * (double) Math.pow(dt, 3)},
-                  new double[] {0.5F * (double) Math.pow(dt, 3), dt * dt}
-                })
-            .scale(a_variance);
     var H = new SimpleMatrix(new double[] {1F, 0F}).transpose();
-    var R = new SimpleMatrix(new double[] {m_variance});
-    var x0 = new SimpleMatrix(new double[] {0, 0});
-    var P = SimpleMatrix.diag(0, 0);
+    KalmanFilter k =
+        new KalmanBuilder(2)
+            .F(F)
+                .H(H)
+                .Q(
+                    new SimpleMatrix(
+                            new double[][] {
+                              new double[] {
+                                0.25F * (double) Math.pow(dt, 4), 0.5F * (double) Math.pow(dt, 3)
+                              },
+                              new double[] {0.5F * (double) Math.pow(dt, 3), dt * dt}
+                            })
+                        .scale(a_variance))
+                .R(new SimpleMatrix(new double[] {m_variance}))
+                .P(SimpleMatrix.diag(0, 0))
+                .x0(new SimpleMatrix(new double[] {0, 0}))
+                .buildClassical();
 
-    var k = new ClassicalKalmanFilter(F, H, Q, R, P, x0);
-
-    var x_true = x0;
+    var x_true = new SimpleMatrix(new double[] {0, 0});
     for (int i = 0; i < num_steps; i++) {
       // Calculate true position
       var a = rng.nextGaussian(0, Math.sqrt(a_variance));
