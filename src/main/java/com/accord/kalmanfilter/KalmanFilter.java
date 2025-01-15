@@ -13,20 +13,24 @@ public interface KalmanFilter {
   public void predict();
 
   /**
-   * {@code R} defaults to the zero matrix.
-   *
-   * @see KalmanFilter#update(SimpleMatrix, SimpleMatrix)
+   * @see KalmanFilter#update(SimpleMatrix, SimpleMatrix, SimpleMatrix)
    */
   public void update(SimpleMatrix z);
+
+  /**
+   * @see KalmanFilter#update(SimpleMatrix, SimpleMatrix, SimpleMatrix)
+   */
+  public void update(SimpleMatrix z, SimpleMatrix R);
 
   /**
    * Update the Kalman filter with a measurement.
    *
    * @param z One column {@link SimpleMatrix} containing the measurement.
-   * @param R The measurement noise covariance matrix
+   * @param R The measurement noise covariance matrix.
+   * @param H The measurement observation matrix.
    */
   @SuppressWarnings({"checkstyle:ParameterName"})
-  public void update(SimpleMatrix z, SimpleMatrix R);
+  public void update(SimpleMatrix z, SimpleMatrix R, SimpleMatrix H);
 
   /**
    * Get the current state of the Kalman filter.

@@ -149,7 +149,7 @@ public class ClassicalKalmanFilter implements KalmanFilter {
    * @param z Measurement
    */
   public void update(SimpleMatrix z) {
-    updateInternal(z.getMatrix(), this.R);
+    updateInternal(z.getMatrix(), this.R, this.H);
   }
 
   /**
@@ -159,7 +159,18 @@ public class ClassicalKalmanFilter implements KalmanFilter {
    * @param R Measurement covariance
    */
   public void update(SimpleMatrix z, SimpleMatrix R) {
-    updateInternal(z.getMatrix(), R.getMatrix());
+    updateInternal(z.getMatrix(), R.getMatrix(), this.H);
+  }
+
+  /**
+   * Update state variable prediction.
+   *
+   * @param z Measurement
+   * @param R Measurement covariance
+   * @param H Measurement observation
+   */
+  public void update(SimpleMatrix z, SimpleMatrix R, SimpleMatrix H) {
+    updateInternal(z.getMatrix(), R.getMatrix(), H.getMatrix());
   }
 
   /**
@@ -174,10 +185,11 @@ public class ClassicalKalmanFilter implements KalmanFilter {
   /**
    * Update state variable predictions.
    *
-   * @param z Measrument
+   * @param z Measurement
    * @param R Measurement covariance
+   * @param H Measurement observation
    */
-  private void updateInternal(DMatrixRMaj z, DMatrixRMaj R) {
+  private void updateInternal(DMatrixRMaj z, DMatrixRMaj R, DMatrixRMaj H) {
     // Calculate innovations based on predicted state
     // y = z - H*x
     mult(H, x, y); // y = H*x
